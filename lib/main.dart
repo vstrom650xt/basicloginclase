@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:loginclase/login.dart';
+import 'package:loginclase/screens/CountriesScreen.dart';
+import 'package:loginclase/screens/InfoReg.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
             seedColor: const Color.fromARGB(255, 21, 133, 113)),
         useMaterial3: true,
       ),
-      home: const login(),
+      home: const InfoReg(),
     );
   }
 }

@@ -10,17 +10,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        cardColor: Colors.white, // Establece el color de fondo de las tarjetas
-        // Otros ajustes de tema según sea necesario
+        cardColor: Color.fromARGB(255, 253, 251, 251),
       ),
-      home: InfoReg(),
+      home: const InfoReg(),
     );
   }
 }
 
 class InfoReg extends StatelessWidget {
   const InfoReg({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +38,6 @@ class InfoReg extends StatelessWidget {
                 subtitle1: 'Capital: Gandía',
                 subtitle2: provincies["provincies"][1]["comarques"][0]["desc"],
               ),
-              SizedBox(height: 10),
             ],
           ),
         ),
@@ -57,6 +54,7 @@ class InfoReg extends StatelessWidget {
     return Container(
       width: 400,
       child: Card(
+        color: Color.fromARGB(255, 255, 255, 255),
         elevation: 5,
         margin: const EdgeInsets.all(10),
         child: Column(

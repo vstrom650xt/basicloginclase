@@ -17,7 +17,7 @@ class ProvinceWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      width: 300, // Adjust the width according to your needs
+      width: 300, 
       height: 300,
       decoration: BoxDecoration(
         gradient: const LinearGradient(

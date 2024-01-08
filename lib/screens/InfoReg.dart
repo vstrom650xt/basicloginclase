@@ -23,8 +23,14 @@ class InfoReg extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('La safor'),
-        centerTitle: true,
+        title: Text('Título de la aplicación'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            // Navegar hacia atrás cuando se presiona la flecha de vuelta atrás
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: SingleChildScrollView(
         primary: true,

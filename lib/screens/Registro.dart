@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:loginclase/screens/CountriesScreen.dart';
 import 'package:loginclase/screens/InfoReg.dart';
-import 'package:loginclase/screens/ProvincesScreen.dart';
-import 'package:loginclase/screens/Registro.dart';
+import 'package:loginclase/screens/Login.dart';
 
-class login extends StatelessWidget {
-  const login({super.key});
+class Registro extends StatelessWidget {
+  const Registro({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +21,7 @@ class login extends StatelessWidget {
             children: [
               Padding(
                 padding: EdgeInsets.symmetric(
-                    horizontal: size.width * 0.25, vertical: size.width * 0.03),
+                    horizontal: size.width * 0.25, vertical: size.width * 0.01),
                 child: TextField(
                   style: const TextStyle(color: Colors.white),
                   keyboardType: TextInputType.emailAddress,
@@ -51,7 +49,7 @@ class login extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(54.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Center(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -66,7 +64,7 @@ class login extends StatelessWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => ProvincesScreen()),
+                                      builder: (context) => InfoReg()),
                                 )
                               },
                           child: const Text("Iniciar Sesión")),
@@ -84,10 +82,10 @@ class login extends StatelessWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Registro()),
+                                      builder: (context) => login()),
                                 )
                               },
-                          child: const Text("Registro"))
+                          child: const Text("Cancelar"))
                     ],
                   ),
                 ),

@@ -8,8 +8,14 @@ class AboutReg extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('La Safor'),
-        centerTitle: true,
+        title: Text('Título de la aplicación'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            // Navegar hacia atrás cuando se presiona la flecha de vuelta atrás
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: Center(
         child: Column(
@@ -20,7 +26,7 @@ class AboutReg extends StatelessWidget {
               height: 250,
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage("lib/images/wall.jpg"),
+                    image: AssetImage("lib/images/clear.png"),
                     fit: BoxFit.cover),
               ),
             ),
@@ -33,14 +39,15 @@ class AboutReg extends StatelessWidget {
                   size: 40,
                   color: const Color.fromARGB(255, 44, 43, 36),
                 ),
-                Text("5.4*"),
+                Text("5.4º"),
                 Padding(padding: EdgeInsets.all(50)),
               ],
             ),
-            TextParam(
-              texto1: '16.516', texto2: '1561.125', texto3: '189.119',
+            const TextParam(
+              texto1: ' 16.516',
+              texto2: ' 1561.125',
+              texto3: ' 189.119',
             ),
-           
           ],
         ),
       ),
@@ -50,13 +57,14 @@ class AboutReg extends StatelessWidget {
 
 class TextParam extends StatelessWidget {
   final String texto1;
-    final String texto2;
+  final String texto2;
   final String texto3;
-
 
   const TextParam({
     super.key,
-    required this.texto1, required this.texto2, required this.texto3,
+    required this.texto1,
+    required this.texto2,
+    required this.texto3,
   });
 
   @override
@@ -67,7 +75,6 @@ class TextParam extends StatelessWidget {
         Text("poblacion:$texto1"),
         Text("Latitud:$texto2"),
         Text("Longitud:$texto3"),
-
       ],
     );
   }

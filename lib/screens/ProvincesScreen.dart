@@ -49,6 +49,7 @@ class ProvincesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text('Provincias'),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
@@ -69,6 +70,7 @@ class ProvincesScreen extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => CountriesScreen(
+                        province: 0,
                         imageUrl: provincies["provincies"][2]["img"],
                       ),
                     ),
@@ -86,6 +88,7 @@ class ProvincesScreen extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => CountriesScreen(
+                        province: 1,
                         imageUrl: provincies["provincies"][0]["img"],
                       ),
                     ),
@@ -103,6 +106,7 @@ class ProvincesScreen extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => CountriesScreen(
+                        province: 2,
                         imageUrl: provincies["provincies"][1]["img"],
                       ),
                     ),

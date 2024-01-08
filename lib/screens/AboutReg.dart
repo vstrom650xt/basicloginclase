@@ -8,7 +8,7 @@ class AboutReg extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Título de la aplicación'),
+        title: Text('el tiempo'),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {

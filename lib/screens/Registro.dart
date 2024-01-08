@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loginclase/screens/InfoReg.dart';
-import 'package:loginclase/screens/Login.dart';
+import 'package:loginclase/screens/login.dart';
 
 class Registro extends StatelessWidget {
   const Registro({super.key});

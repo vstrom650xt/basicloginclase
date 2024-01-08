@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:loginclase/screens/AboutReg.dart';
 import 'package:loginclase/screens/CountriesScreen.dart';
 import 'package:loginclase/screens/InfoReg.dart';
-import 'package:loginclase/screens/Login.dart';
 import 'package:loginclase/screens/Registro.dart';
+import 'package:loginclase/screens/login.dart';
 
 void main() {
   runApp(const MyApp());

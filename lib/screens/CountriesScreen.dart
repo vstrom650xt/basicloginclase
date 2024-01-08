@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:loginclase/model/counties.dart';
 import 'package:loginclase/screens/AboutReg.dart';
-import 'package:loginclase/screens/Login.dart';
 import 'package:loginclase/screens/ProvincesScreen.dart';
+import 'package:loginclase/screens/login.dart';
 
 class CountriesScreen extends StatelessWidget {
+  final int province;
   final String imageUrl; // Declarar el parámetro imageUrl
-  const CountriesScreen({Key? key, required this.imageUrl}) : super(key: key);
+  const CountriesScreen(
+      {Key? key, required this.province, required this.imageUrl})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +40,7 @@ class CountriesScreen extends StatelessWidget {
                     // Navegación a la siguiente página
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              const AboutReg()), // Reemplaza 'Page' con el nombre correcto de tu siguiente página
+                      MaterialPageRoute(builder: (context) => const AboutReg()),
                     );
                   },
                 ),
@@ -51,9 +52,7 @@ class CountriesScreen extends StatelessWidget {
                     // Navegación a la siguiente página
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              const AboutReg()), // Reemplaza 'Page' con el nombre correcto de tu siguiente página
+                      MaterialPageRoute(builder: (context) => const AboutReg()),
                     );
                   },
                 ),
@@ -62,12 +61,9 @@ class CountriesScreen extends StatelessWidget {
                   imageUrl: provincies["provincies"][1]["comarques"][2]["img"],
                   text: provincies["provincies"][1]["comarques"][2]["capital"],
                   onTap: () {
-                    // Navegación a la siguiente página
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              const AboutReg()), // Reemplaza 'Page' con el nombre correcto de tu siguiente página
+                      MaterialPageRoute(builder: (context) => const AboutReg()),
                     );
                   },
                 ),

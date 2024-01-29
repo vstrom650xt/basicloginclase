@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:loginclase/model/counties.dart';
 
 void main() {
   runApp(MyApp());
@@ -38,12 +37,12 @@ class InfoReg extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _buildCard(
-                imageUrl: provincies["provincies"][1]["comarques"][0]["img"],
-                title: 'La Safor',
-                subtitle1: 'Capital: Gandía',
-                subtitle2: provincies["provincies"][1]["comarques"][0]["desc"],
-              ),
+            //  _buildCard(
+            //    imageUrl: provincies["provincies"][1]["comarques"][0]["img"],
+           //     title: 'La Safor',
+            //    subtitle1: 'Capital: Gandía',
+            //    subtitle2: provincies["provincies"][1]["comarques"][0]["desc"],
+           //   ),
             ],
           ),
         ),

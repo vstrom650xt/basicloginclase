@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:loginclase/model/counties.dart';
+import 'package:http/http.dart' as http;
+import 'package:loginclase/logic/peticiones.dart';
 import 'package:loginclase/screens/CountriesScreen.dart';
 
 class ProvinceWidget extends StatelessWidget {
@@ -40,10 +43,41 @@ class ProvinceWidget extends StatelessWidget {
   }
 }
 
-class ProvincesScreen extends StatelessWidget {
-  const ProvincesScreen({
-    Key? key,
-  }) : super(key: key);
+class ProvincesScreen extends StatefulWidget {
+  const ProvincesScreen({Key? key}) : super(key: key);
+
+  @override
+  _ProvincesScreenState createState() => _ProvincesScreenState();
+}
+
+class _ProvincesScreenState extends State<ProvincesScreen> {
+  late List<Map<String, dynamic>> provincies;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchProvincies();
+  }
+
+  Future<void> _fetchProvincies() async {
+    const String obtenerProvincias =
+        'https://node-comarques-rest-server-production.up.railway.app/api/comarques';
+
+    try {
+      final response = await http.get(Uri.parse(obtenerProvincias));
+
+      if (response.statusCode == 200) {
+        final List<dynamic> responseData = jsonDecode(response.body);
+        setState(() {
+          provincies = List<Map<String, dynamic>>.from(responseData);
+        });
+      } else {
+        print('Error en la petición: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,62 +93,33 @@ class ProvincesScreen extends StatelessWidget {
       ),
       body: Container(
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ProvinceWidget(
-                imageUrl: provincies["provincies"][2]["img"],
-                provinceName: 'Castellon',
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CountriesScreen(
-                        province: 0,
-                        imageUrl: provincies["provincies"][2]["img"],
-                      ),
+          child: provincies != null
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(
+                    provincies.length,
+                    (index) => ProvinceWidget(
+                      imageUrl: provincies[index]["img"],
+                      provinceName: provincies[index]["provincia"],
+                      onTap: () {
+                        // Concatenar la URL con el nombre de la provincia
+                        String provinciaUrl = 'https://node-comarques-rest-server-production.up.railway.app/api/comarques/${provincies[index]["provincia"]}';
+                        
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CountriesScreen(
+                              province: index,
+                              imageUrl: provincies[index]["img"],
+                              url: provinciaUrl,
+                            ),
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
-              const Padding(
-                padding: EdgeInsets.all(14.0),
-              ),
-              ProvinceWidget(
-                imageUrl: provincies["provincies"][0]["img"],
-                provinceName: 'Valencia',
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CountriesScreen(
-                        province: 1,
-                        imageUrl: provincies["provincies"][0]["img"],
-                      ),
-                    ),
-                  );
-                },
-              ),
-              const Padding(
-                padding: EdgeInsets.all(14.0),
-              ),
-              ProvinceWidget(
-                imageUrl: provincies["provincies"][1]["img"],
-                provinceName: 'Alicante',
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CountriesScreen(
-                        province: 2,
-                        imageUrl: provincies["provincies"][1]["img"],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
+                  ),
+                )
+              : CircularProgressIndicator(),
         ),
       ),
     );

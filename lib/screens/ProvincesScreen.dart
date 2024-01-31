@@ -103,15 +103,16 @@ class _ProvincesScreenState extends State<ProvincesScreen> {
                       provinceName: provincies[index]["provincia"],
                       onTap: () {
                         // Concatenar la URL con el nombre de la provincia
-                        String provinciaUrl = 'https://node-comarques-rest-server-production.up.railway.app/api/comarques/${provincies[index]["provincia"]}';
-                        
+                        String provinciaUrl =
+                            'https://node-comarques-rest-server-production.up.railway.app/api/comarques/${provincies[index]["provincia"]}';
+
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => CountriesScreen(
                               province: index,
                               imageUrl: provincies[index]["img"],
-                              url: provinciaUrl,
+                              baseUrl: provinciaUrl,
                             ),
                           ),
                         );

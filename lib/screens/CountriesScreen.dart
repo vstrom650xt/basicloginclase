@@ -1,43 +1,38 @@
+// lib/screens/countries_screen.dart
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
-import 'package:loginclase/screens/AboutReg.dart';
-import 'package:loginclase/screens/ProvincesScreen.dart';
-import 'package:loginclase/screens/login.dart';
+import 'info_reg.dart';
 
 class CountriesScreen extends StatelessWidget {
   final int province;
   final String imageUrl;
-  final String url;
+  final String baseUrl;
 
   const CountriesScreen({
     Key? key,
     required this.province,
     required this.imageUrl,
-    required this.url,
+    required this.baseUrl,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    print('Received imageUrl in CountriesScreen: $url');
+    print('Received imageUrl in CountriesScreen: $baseUrl');
 
     return Scaffold(
       appBar: AppBar(
         title: Text('Pueblos'),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: () => {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const ProvincesScreen()),
-            )
+          onPressed: () {
+            Navigator.pop(context);
           },
         ),
       ),
       body: Center(
         child: FutureBuilder(
-          future: _fetchData(url),
+          future: _fetchData(baseUrl),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return CircularProgressIndicator();
@@ -50,15 +45,15 @@ class CountriesScreen extends StatelessWidget {
                   return _buildClickableSquare(
                     imageUrl: imageUrl,
                     text: (snapshot.data as List<dynamic>)[index].toString(),
-                    url: url,
                     onTap: () {
-                      // Navigate to INFOREG and pass the URL
+                      String selectedText =
+                          (snapshot.data as List<dynamic>)[index].toString();
+                      String concatenatedUrl = '$baseUrl$infoComarcaPath$selectedText';
+
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => InfoReg(
-                            url: url,
-                          ),
+                          builder: (context) => InfoReg(baseUrl: concatenatedUrl),
                         ),
                       );
                     },
@@ -79,7 +74,6 @@ class CountriesScreen extends StatelessWidget {
   Widget _buildClickableSquare({
     required String imageUrl,
     required String text,
-    required String url,
     required VoidCallback onTap,
   }) {
     return GestureDetector(
@@ -131,24 +125,5 @@ class CountriesScreen extends StatelessWidget {
     } catch (e) {
       throw Exception('Error: $e');
     }
-  }
-}
-
-class InfoReg extends StatelessWidget {
-  final String url;
-
-  const InfoReg({Key? key, required this.url}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    // Implement the UI for the INFOREG screen using the received URL
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('INFOREG'),
-      ),
-      body: Center(
-        child: Text('Received URL in INFOREG: $url'),
-      ),
-    );
   }
 }

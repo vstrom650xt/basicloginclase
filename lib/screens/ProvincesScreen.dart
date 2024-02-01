@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:loginclase/logic/peticiones.dart';
 import 'package:loginclase/screens/CountriesScreen.dart';
 
 class ProvinceWidget extends StatelessWidget {
@@ -51,7 +50,7 @@ class ProvincesScreen extends StatefulWidget {
 }
 
 class _ProvincesScreenState extends State<ProvincesScreen> {
-  late List<Map<String, dynamic>> provincies;
+  late List<Map<String, dynamic>> provincies = [];
 
   @override
   void initState() {
@@ -61,7 +60,7 @@ class _ProvincesScreenState extends State<ProvincesScreen> {
 
   Future<void> _fetchProvincies() async {
     const String obtenerProvincias =
-        'https://node-comarques-rest-server-production.up.railway.app/api/comarques';
+        'https://node-comarques-rest-server-production.up.railway.app/api/comarques/';
 
     try {
       final response = await http.get(Uri.parse(obtenerProvincias));
@@ -93,7 +92,7 @@ class _ProvincesScreenState extends State<ProvincesScreen> {
       ),
       body: Container(
         child: Center(
-          child: provincies != null
+          child: provincies.isNotEmpty
               ? Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: List.generate(
@@ -104,13 +103,12 @@ class _ProvincesScreenState extends State<ProvincesScreen> {
                       onTap: () {
                         // Concatenar la URL con el nombre de la provincia
                         String provinciaUrl =
-                            'https://node-comarques-rest-server-production.up.railway.app/api/comarques/${provincies[index]["provincia"]}';
+                            'https://node-comarques-rest-server-production.up.railway.app/api/comarques/comarquesAmbImatge/${provincies[index]["provincia"]}';
 
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => CountriesScreen(
-                              province: index,
                               imageUrl: provincies[index]["img"],
                               baseUrl: provinciaUrl,
                             ),

@@ -1,24 +1,21 @@
-// lib/screens/countries_screen.dart
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'info_reg.dart';
+import 'inforeg.dart';
 
 class CountriesScreen extends StatelessWidget {
-  final int province;
   final String imageUrl;
   final String baseUrl;
 
   const CountriesScreen({
     Key? key,
-    required this.province,
     required this.imageUrl,
     required this.baseUrl,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    print('Received imageUrl in CountriesScreen: $baseUrl');
+    print('Received baseUrl in CountriesScreen: $baseUrl');
 
     return Scaffold(
       appBar: AppBar(
@@ -42,18 +39,28 @@ class CountriesScreen extends StatelessWidget {
               List<Widget> squareWidgets = List.generate(
                 (snapshot.data as List<dynamic>).length,
                 (index) {
+                  var data = snapshot.data?[
+                      index]; // Agregar el operador ? para comprobación de nulabilidad
                   return _buildClickableSquare(
-                    imageUrl: imageUrl,
-                    text: (snapshot.data as List<dynamic>)[index].toString(),
+                    imageUrl: data?["img"] ??
+                        "", // Agregar el operador ? para comprobación de nulabilidad
+                    text: data?["nom"] ??
+                        "", // Agregar el operador ? para comprobación de nulabilidad
                     onTap: () {
-                      String selectedText =
-                          (snapshot.data as List<dynamic>)[index].toString();
-                      String concatenatedUrl = '$baseUrl$infoComarcaPath$selectedText';
+                      String selectedText = data?["nom"] ??
+                          ""; // Agregar el operador ? para comprobación de nulabilidad
+                      String encodedText = Uri.encodeComponent(selectedText);
+                      String concatenatedUrl =
+                          Uri.parse('$baseUrl/$encodedText').toString();
 
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => InfoReg(baseUrl: concatenatedUrl),
+                          builder: (context) => InfoReg(
+                            province: index,
+                            imageUrl: imageUrl,
+                            baseUrl: concatenatedUrl,
+                          ),
                         ),
                       );
                     },

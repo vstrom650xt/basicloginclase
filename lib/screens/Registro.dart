@@ -61,11 +61,11 @@ class Registro extends StatelessWidget {
                               foregroundColor:
                                   const Color.fromARGB(255, 253, 253, 253)),
                           onPressed: () => {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => InfoReg()),
-                                )
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //       builder: (context) => InfoReg()),
+                                // )
                               },
                           child: const Text("Iniciar Sesión")),
                       const SizedBox(

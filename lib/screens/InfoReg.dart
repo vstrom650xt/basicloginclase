@@ -1,109 +1,65 @@
 import 'package:flutter/material.dart';
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        cardColor: Color.fromARGB(255, 253, 251, 251),
-      ),
-      home: const InfoReg(),
-    );
-  }
-}
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class InfoReg extends StatelessWidget {
-  const InfoReg({Key? key}) : super(key: key);
+  final int province;
+  final String imageUrl;
+  final String baseUrl;
+
+  const InfoReg({
+    Key? key,
+    required this.province,
+    required this.imageUrl,
+    required this.baseUrl,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    print('Received baseUrl in InfoReg: $baseUrl');
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Título de la aplicación'),
+        title: Text('Información de la Comarca'),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            // Navegar hacia atrás cuando se presiona la flecha de vuelta atrás
             Navigator.pop(context);
           },
         ),
       ),
-      body: SingleChildScrollView(
-        primary: true,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-            //  _buildCard(
-            //    imageUrl: provincies["provincies"][1]["comarques"][0]["img"],
-           //     title: 'La Safor',
-            //    subtitle1: 'Capital: Gandía',
-            //    subtitle2: provincies["provincies"][1]["comarques"][0]["desc"],
-           //   ),
-            ],
-          ),
+      body: Center(
+        child: FutureBuilder(
+          future: _fetchData(baseUrl),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else {
+              // Aquí puedes construir la interfaz utilizando los datos obtenidos
+              // Puedes acceder a los datos como snapshot.data
+
+              return Container(
+                child: Text('Información de la Comarca'),
+              );
+            }
+          },
         ),
       ),
     );
   }
 
-  Widget _buildCard({
-    required String imageUrl,
-    required String title,
-    required String subtitle1,
-    required String subtitle2,
-  }) {
-    return Container(
-      width: 400,
-      child: Card(
-        color: Color.fromARGB(255, 255, 255, 255),
-        elevation: 5,
-        margin: const EdgeInsets.all(10),
-        child: Column(
-          children: [
-            // Imagen
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.network(
-                imageUrl,
-                width: 250,
-                height: 150,
-                fit: BoxFit.cover,
-              ),
-            ),
-            // Textos
-            ListTile(
-              title: Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    subtitle1,
-                    style: const TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                  Text(
-                    subtitle2,
-                    style: const TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+  Future<dynamic> _fetchData(String url) async {
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        return json.decode(response.body);
+      } else {
+        throw Exception('Failed to load data');
+      }
+    } catch (e) {
+      throw Exception('Error: $e');
+    }
   }
 }

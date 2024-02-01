@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'AboutReg.dart'; // Asegúrate de importar la clase AboutReg
+import 'AboutReg.dart';
 
 class InfoReg extends StatelessWidget {
   final int province;
   final String imageUrl;
   final String baseUrl;
+  late Map<String, dynamic> data; // Definir data aquí
 
-  const InfoReg({
+  InfoReg({
     Key? key,
     required this.province,
     required this.imageUrl,
@@ -38,10 +39,7 @@ class InfoReg extends StatelessWidget {
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else {
-              // Access the fetched data
-              Map<String, dynamic> data = snapshot.data as Map<String, dynamic>;
-
-              // Build the Card widget
+              data = snapshot.data as Map<String, dynamic>; // Asignar valor a data
               return _buildCard(
                 comarca: data['comarca'],
                 capital: data['capital'],
@@ -59,35 +57,43 @@ class InfoReg extends StatelessWidget {
     );
   }
 
-  Widget _buildCard({
-    required String comarca,
-    required String capital,
-    required String poblacio,
-    required String img,
-    required String desc,
-    required double latitud,
-    required double longitud,
-  }) {
-    return Card(
-      child: Column(
-        children: [
-          Image.network(img),
-          ListTile(
-            title: Text('Comarca: $comarca'),
-            subtitle: Text('Capital: $capital\nPoblación: $poblacio'),
+ Widget _buildCard({
+  required String comarca,
+  required String capital,
+  required String poblacio,
+  required String img,
+  required String desc,
+  required double latitud,
+  required double longitud,
+}) {
+  return Card(
+    child: Column(
+      children: [
+        Container(
+          width: 500, // Ajusta el ancho según tus necesidades
+          height: 500, // Ajusta la altura según tus necesidades
+          child: Image.network(
+            img,
+            fit: BoxFit.cover, // Ajusta según tu preferencia (cover, contain, etc.)
           ),
-          ListTile(
-            title: Text('Descripción:'),
-            subtitle: Text(desc),
-          ),
-          ListTile(
-            title: Text('Ubicación:'),
-            subtitle: Text('Latitud: $latitud, Longitud: $longitud'),
-          ),
-        ],
-      ),
-    );
-  }
+        ),
+        ListTile(
+          title: Text('Comarca: $comarca'),
+          subtitle: Text('Capital: $capital\nPoblación: $poblacio'),
+        ),
+        ListTile(
+          title: Text('Descripción:'),
+          subtitle: Text(desc),
+        ),
+        ListTile(
+          title: Text('Ubicación:'),
+          subtitle: Text('Latitud: $latitud, Longitud: $longitud'),
+        ),
+      ],
+    ),
+  );
+}
+
 
   Widget _buildBottomNavigationBar(BuildContext context) {
     return BottomNavigationBar(
@@ -107,11 +113,13 @@ class InfoReg extends StatelessWidget {
       ],
       onTap: (int index) {
         if (index == 2) {
-          // Navegar a la pantalla AboutReg
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AboutReg(),
+              builder: (context) => AboutReg(
+                latitud: data['latitud'],
+                longitud: data['longitud'],
+              ),
             ),
           );
         }

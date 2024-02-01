@@ -4,6 +4,8 @@ class AboutReg extends StatelessWidget {
   const AboutReg({Key? key});
   static const IconData thermometer = IconData(0xf864);
 
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

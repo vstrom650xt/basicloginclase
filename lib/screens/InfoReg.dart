@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'AboutReg.dart'; // Asegúrate de importar la clase AboutReg
 
 class InfoReg extends StatelessWidget {
   final int province;
@@ -37,16 +38,84 @@ class InfoReg extends StatelessWidget {
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else {
-              // Aquí puedes construir la interfaz utilizando los datos obtenidos
-              // Puedes acceder a los datos como snapshot.data
+              // Access the fetched data
+              Map<String, dynamic> data = snapshot.data as Map<String, dynamic>;
 
-              return Container(
-                child: Text('Información de la Comarca'),
+              // Build the Card widget
+              return _buildCard(
+                comarca: data['comarca'],
+                capital: data['capital'],
+                poblacio: data['poblacio'],
+                img: data['img'],
+                desc: data['desc'],
+                latitud: data['latitud'],
+                longitud: data['longitud'],
               );
             }
           },
         ),
       ),
+      bottomNavigationBar: _buildBottomNavigationBar(context),
+    );
+  }
+
+  Widget _buildCard({
+    required String comarca,
+    required String capital,
+    required String poblacio,
+    required String img,
+    required String desc,
+    required double latitud,
+    required double longitud,
+  }) {
+    return Card(
+      child: Column(
+        children: [
+          Image.network(img),
+          ListTile(
+            title: Text('Comarca: $comarca'),
+            subtitle: Text('Capital: $capital\nPoblación: $poblacio'),
+          ),
+          ListTile(
+            title: Text('Descripción:'),
+            subtitle: Text(desc),
+          ),
+          ListTile(
+            title: Text('Ubicación:'),
+            subtitle: Text('Latitud: $latitud, Longitud: $longitud'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBottomNavigationBar(BuildContext context) {
+    return BottomNavigationBar(
+      items: [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Inicio',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.beach_access),
+          label: 'Mapa',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.info),
+          label: 'Acerca de',
+        ),
+      ],
+      onTap: (int index) {
+        if (index == 2) {
+          // Navegar a la pantalla AboutReg
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AboutReg(),
+            ),
+          );
+        }
+      },
     );
   }
 

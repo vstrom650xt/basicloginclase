@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'inforeg.dart';
+import 'InfoReg.dart';
 
 class CountriesScreen extends StatelessWidget {
   final String imageUrl;
@@ -39,20 +39,14 @@ class CountriesScreen extends StatelessWidget {
               List<Widget> squareWidgets = List.generate(
                 (snapshot.data as List<dynamic>).length,
                 (index) {
-                  var data = snapshot.data?[
-                      index]; // Agregar el operador ? para comprobación de nulabilidad
+                  var data = snapshot.data?[index];
                   return _buildClickableSquare(
-                    imageUrl: data?["img"] ??
-                        "", // Agregar el operador ? para comprobación de nulabilidad
-                    text: data?["nom"] ??
-                        "", // Agregar el operador ? para comprobación de nulabilidad
+                    imageUrl: data?["img"] ?? "",
+                    text: data?["nom"] ?? "",
                     onTap: () {
-                      String selectedText = data?["nom"] ??
-                          ""; // Agregar el operador ? para comprobación de nulabilidad
+                      String selectedText = data?["nom"] ?? "";
                       String encodedText = Uri.encodeComponent(selectedText);
-                      String concatenatedUrl =
-                          Uri.parse('$baseUrl/$encodedText').toString();
-
+                      String concatenatedUrl = Uri.parse('${removeTrailingSlashes(baseUrl)}infoComarca/$encodedText').toString();
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -119,6 +113,17 @@ class CountriesScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String removeTrailingSlashes(String url) {
+    int lastSlashIndex = url.lastIndexOf('/');
+    int secondLastSlashIndex = url.substring(0, lastSlashIndex).lastIndexOf('/');
+
+    if (lastSlashIndex != -1 && secondLastSlashIndex != -1) {
+      return url.substring(0, secondLastSlashIndex + 1); // Agrega 1 para incluir la última barra diagonal.
+    } else {
+      return url;
+    }
   }
 
   Future<List<dynamic>> _fetchData(String url) async {

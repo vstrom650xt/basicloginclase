@@ -90,25 +90,25 @@ class AboutReg extends StatelessWidget {
 
   Widget _obtenerIcono(String value) {
     if (sol.contains(value)) {
-      return Image.asset("assets/icons/png/soleado.png");
+      return Image.asset("lib/images/soleado.png");
     }
     if (pocsNuvols.contains(value)) {
-      return Image.asset("assets/icons/png/poco_nublado.png");
+      return Image.asset("lib/images/poco_nublado.png");
     }
     if (nuvols.contains(value)) {
-      return Image.asset("assets/icons/png/nublado.png");
+      return Image.asset("lib/images/nublado.png");
     }
     if (plujasuau.contains(value)) {
-      return Image.asset("assets/icons/png/lluvia_debil.png");
+      return Image.asset("lib/images/lluvia_debil.png");
     }
     if (pluja.contains(value)) {
-      return Image.asset("assets/icons/png/lluvia.png");
+      return Image.asset("lib/images/lluvia.png");
     }
     if (neu.contains(value)) {
-      return Image.asset("assets/icons/png/nieve.png");
+      return Image.asset("lib/images/nieve.png");
     }
 
-    return Image.asset("assets/icons/png/poco_nublado.png");
+    return Image.asset("lib/images/poco_nublado.png");
   }
 }
 
